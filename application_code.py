@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Union
+import math
 
 class Person:
     """Class holds the details of a person such as Name, Age, etc."""
@@ -83,3 +84,98 @@ class Person:
             raise ValueError('Bonus must be non-negative')
         self._base_salary = base_salary
         self._bonus = bonus
+
+
+class Circle:
+    """ Circle class which has manages radius, diameter and area """
+    def __init__(self, radius):
+        self._radius = radius
+        self._area = None
+
+    @property
+    def radius(self)->Union[int, float]:
+        return self._radius
+    
+    @radius.setter
+    def radius(self, radius:Union[int, float])->None:
+        if not isinstance (radius, (int, float)):
+            raise ValueError ('Radius must be either int or float')
+
+        if radius < 0:
+            raise ValueError ('Radius must be a positive integer')
+        
+        self._radius = radius
+        self._area = None
+
+    @property
+    def diameter(self)->Union[int, float]:
+        return 2*self._radius
+    
+    @diameter.setter
+    def diameter(self, diameter:Union[int, float])->None:
+        if not isinstance (diameter, (int, float)):
+            raise ValueError ('Diameter must be either int or float')
+        
+        self._radius = diameter/2
+        self._area = None
+
+    @property
+    def area(self)->Union[int, float]:
+        if self._area == None:
+            self._area = math.pi*self._radius*self._radius
+            return self._area
+        else:
+            return self._area
+    
+
+class Vehicle:
+    vehicle_count = 0
+    
+    def __init__(self, manufacturer, car_make, year):
+        manufacturer = manufacturer
+        car_make = car_make
+        year = year
+        Vehicle.vehicle_count += 1
+
+    @classmethod
+    def get_vehicle_count(cls):
+        return cls.vehicle_count
+    
+    @staticmethod
+    def classify_vehicle(arg):
+        return (f"This is a {arg}")
+
+
+class ElectricVehicle(Vehicle):
+    @staticmethod
+    def classify_vehicle(arg):
+        return (f"This is an electric {arg}")
+
+
+class DynamicClass:
+    static_value = 0
+
+    def __init__(self):
+        pass
+
+    def dynamic_attr(self, name, obj):
+        self.name = obj
+
+
+
+class ValidatedAttribute:
+    def __init__(self, value:Union[int, float]=None)->None:
+        self._value = None
+
+    @property
+    def value(self)->Union[int, float]:
+        return self._value
+    
+    @value.setter
+    def value(self, value:Union[int, float])->None:
+        if value <= 0:
+            raise ValueError('Value must a positive')
+        if not isinstance(value, (int, float)):
+            raise ValueError('Value must be either int or float')
+        
+        self._value = value
